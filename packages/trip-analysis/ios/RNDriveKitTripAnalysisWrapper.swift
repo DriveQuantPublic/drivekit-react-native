@@ -9,6 +9,8 @@ public class RNDriveKitTripAnalysisWrapper: NSObject {
     
     @objc public func initialize(launchOptions: [UIApplication.LaunchOptionsKey: Any]) -> Void {
         DriveKitTripAnalysis.shared.initialize(tripListener: self, appLaunchOptions: launchOptions)
+        let beacon = BeaconData(proximityUuid:"699ebc80-e1f3-11e3-9a0f-0cf3ee3bc012")
+        DriveKitTripAnalysis.shared.setBeacons(beacons: [beacon])
     }
     
     @objc internal func activateAutoStart(enable: NSNumber) -> Void {

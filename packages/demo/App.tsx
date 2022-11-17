@@ -38,6 +38,8 @@ const App = () => {
   const [monitorPotentialTripStart, setMonitorPotentialTripStart] =
     useState(false);
 
+  var RNFS = require('react-native-fs');
+
   const checkUserIdValue = async () => {
     const userIdVal = await DriveKit.getUserId();
       setUserId(userIdVal)
@@ -55,7 +57,7 @@ const App = () => {
        * This is why we put it at the end.
        */
       await checkBatteryOptimizationPermission();
-      DriveKitTripAnalysis.activateAutoStart(true);
+      DriveKitTripAnalysis.activateAutoStart(false);
     };
 
     checkPermissions();
@@ -77,6 +79,17 @@ const App = () => {
       'potentialTripStart',
       (startMode: number) => {
         console.log('potential trip start', startMode);
+		 var path = RNFS.DocumentDirectoryPath + '/' + Date.now() + '-potential-trip-start-' + startMode + '.txt';
+
+		// write the file
+		RNFS.writeFile(path, '' + Date.now() + '-potential-trip-start-' + startMode, 'utf8')
+		.then((success) => {
+		 console.log('FILE WRITTEN!');
+		})
+		.catch((err) => {
+		 console.log(err.message);
+		});
+		
       },
     );
     return () => listener.remove();
