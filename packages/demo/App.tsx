@@ -54,7 +54,7 @@ const App = () => {
        * There is no open source library that promisify the modal call
        * This is why we put it at the end.
        */
-      await checkBatteryOptimizationPermission();
+      // await checkBatteryOptimizationPermission();
     };
 
     checkPermissions();

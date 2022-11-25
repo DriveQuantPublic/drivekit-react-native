@@ -59,9 +59,9 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     DriveKitCoreModule.Companion.initialize(this);
     //RNTripNotification tripNotification = new RNTripNotification(
-            "DriveKit SDK",
-            "Start a trip with DriveKit SDK",
-            R.drawable.common_google_signin_btn_icon_dark);
+//            "DriveKit SDK",
+//            "Start a trip with DriveKit SDK",
+//            R.drawable.common_google_signin_btn_icon_dark);
     //DriveKitTripAnalysisModule.Companion.initialize(tripNotification);
     //DriveKitTripAnalysisModule.Companion.registerReceiver(this);
     // If you opted-in for the New Architecture, we enable the TurboModule system

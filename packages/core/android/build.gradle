@@ -61,12 +61,19 @@ android {
   sourceSets {
     main {
       if (isNewArchitectureEnabled()) {
+          println "================="
+          println "NEW ARCH"
+          println "================="
           java.srcDirs += [
             "src/turbo",
             // This is needed to build Kotlin project with TurboModules enabled
             "${project.buildDir}/generated/source/codegen/java"
           ]
+          println java.srcDirs
       } else {
+          println "================="
+          println "OLD"
+          println "================="
           java.srcDirs += ["src/legacy"]
       }
     }
@@ -161,5 +168,7 @@ if (isNewArchitectureEnabled()) {
     jsRootDir = file("../src/")
     libraryName = "DriveKitCore"
     codegenJavaPackageName = "com.reactnativedrivekitcore"
+    codegenDir = rootProject.file("../../../node_modules/react-native-codegen/")
+    reactNativeDir = rootProject.file("../../../node_modules/react-native/")
   }
 }
