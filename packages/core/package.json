@@ -124,13 +124,9 @@
     ]
   },
   "codegenConfig": {
-    "libraries": [
-      {
-        "name": "RNCoreSpec",
-        "type": "modules",
-        "jsSrcsDir": "src"
-      }
-    ]
+    "name": "RNCoreSpec",
+    "type": "modules",
+    "jsSrcsDir": "src"
   },
   "dependencies": {
     "react-native-permissions": "^3.6.1"

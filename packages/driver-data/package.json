@@ -122,5 +122,10 @@
         }
       ]
     ]
+  },
+  "codegenConfig": {
+    "name": "RNDriverDataSpec",
+    "type": "modules",
+    "jsSrcsDir": "src"
   }
 }

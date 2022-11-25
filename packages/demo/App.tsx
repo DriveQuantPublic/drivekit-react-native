@@ -11,16 +11,6 @@ import {
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import * as DriveKit from '@react-native-drivekit/core';
-import * as DriveKitTripAnalysis from '@react-native-drivekit/trip-analysis';
-import type {
-  CancelTripReason,
-  StartMode,
-  TripPoint,
-  Location,
-  SDKState,
-  CrashInfo,
-  CrashFeedback,
-} from '@react-native-drivekit/trip-analysis';
 import {checkBluetoothPermissions} from './src/services/permissions/bluetooth';
 import {Spacer} from './src/components/Spacer';
 import {margins} from './src/margins';
@@ -39,7 +29,7 @@ const App = () => {
   // ========================================
   // ↓↓↓ ENTER YOUR DRIVEKIT API KEY HERE ↓↓↓
   // ========================================
-  // DriveKit.setApiKey("")
+  DriveKit.setApiKey('jX9ZchNyypeQwi6Gi5TUdkdc');
 
   var [userId, setUserId] = useState('');
   const [newUserId, setNewUserId] = useState('');
@@ -48,10 +38,10 @@ const App = () => {
     useState(false);
   const [stopTimeout, setStopTimeout] = useState('240');
 
-  const checkUserIdValue = async () => {
-    const userIdVal = await DriveKit.getUserId();
-    setUserId(userIdVal);
-  };
+  // const checkUserIdValue = async () => {
+  //   const userIdVal = await DriveKit.getUserId();
+  //   setUserId(userIdVal);
+  // };
 
   useEffect(() => {
     const checkPermissions = async () => {
@@ -68,182 +58,50 @@ const App = () => {
     };
 
     checkPermissions();
-    checkUserIdValue();
+    // checkUserIdValue();
   }, []);
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener('driveKitConnected', () => {
-      console.log('Connected to DriveKit');
-      DriveKitTripAnalysis.activateAutoStart(true);
-    });
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener('driveKitDisconnected', () => {
+  //     console.log('Disconnected from DriveKit');
+  //   });
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener('driveKitDisconnected', () => {
-      console.log('Disconnected from DriveKit');
-    });
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener(
+  //     'driveKitDidReceiveAuthenticationError',
+  //     (error: RequestError) => {
+  //       console.log('Received authentication error from DriveKit', error);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener(
-      'driveKitDidReceiveAuthenticationError',
-      (error: RequestError) => {
-        console.log('Received authentication error from DriveKit', error);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener(
+  //     'userIdUpdateStatusChanged',
+  //     ({status, userId: updatedUserId}) => {
+  //       console.log(
+  //         'UserId',
+  //         updatedUserId,
+  //         'update finished with status',
+  //         status,
+  //       );
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener(
-      'userIdUpdateStatusChanged',
-      ({status, userId: updatedUserId}) => {
-        console.log(
-          'UserId',
-          updatedUserId,
-          'update finished with status',
-          status,
-        );
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKit.addEventListener(
-      'accountDeletionCompleted',
-      (status: DeleteAccountStatus) => {
-        console.log('delete account completed with status', status);
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripCancelled',
-      (reason: CancelTripReason) => {
-        console.log('Trip was canceled', reason);
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'potentialTripStart',
-      startMode => {
-        console.log('potential trip start', startMode);
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripStarted',
-      (startMode: StartMode) => {
-        console.log('trip start', startMode);
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripPoint',
-      (tripPoint: TripPoint) => {
-        console.log('trip point', tripPoint);
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripSavedForRepost',
-      () => {
-        console.log('trip saved for repost');
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'beaconDetected',
-      () => {
-        console.log('Beacon detected');
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'significantLocationChangeDetected',
-      (location: Location) => {
-        console.log('Significant location change detected', location);
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'sdkStateChanged',
-      (state: SDKState) => {
-        console.log('SDK State Changed', state);
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'crashDetected',
-      (info: CrashInfo) => {
-        console.log('Crash detected', info);
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'crashFeedbackSent',
-      (crashFeedback: CrashFeedback) => {
-        console.log('Crash feedback sent', crashFeedback);
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripFinished',
-      ({post, response}) => {
-        console.log(
-          'trip finished',
-          JSON.stringify(post),
-          JSON.stringify(response),
-        );
-      },
-    );
-    return () => listener.remove();
-  });
-
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'bluetoothSensorStateChanged',
-      state => {
-        console.log('bluetooth sensor state changed', state);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener(
+  //     'accountDeletionCompleted',
+  //     (status: DeleteAccountStatus) => {
+  //       console.log('delete account completed with status', status);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
   return (
     <SafeAreaView style={styles.page}>
@@ -276,7 +134,7 @@ const App = () => {
           returnKeyType={'done'}
           onChangeText={setUserId}
         />
-        <Spacer factor={2} />
+        {/* <Spacer factor={2} />
         <Button
           title="Configure User ID"
           onPress={async () => {
@@ -338,106 +196,6 @@ const App = () => {
         />
 
         <Spacer factor={2} />
-        <Text style={styles.title}>Reset</Text>
-        <Spacer factor={1} />
-        <Button
-          title={'Reset'}
-          onPress={() => {
-            DriveKit.reset();
-            DriveKitTripAnalysis.reset();
-          }}
-        />
-
-        <Button
-          title={'Enable Logs'}
-          onPress={() => {
-            DriveKit.enableLogging({showInConsole: true, logPath: '/log/path'});
-          }}
-        />
-        <Button
-          title={'Disable Logs'}
-          onPress={() => {
-            DriveKit.disableLogging({showInConsole: false});
-          }}
-        />
-
-        <Spacer factor={2} />
-        <Text style={styles.title}>Trip Analysis</Text>
-        <View style={styles.row}>
-          <CheckBox
-            value={monitorPotentialTripStart}
-            onValueChange={value => {
-              setMonitorPotentialTripStart(value);
-              DriveKitTripAnalysis.enableMonitorPotentialTripStart(value);
-            }}
-          />
-          <Spacer factor={1} />
-          <Text>Should monitor potential starts ?</Text>
-        </View>
-        <Spacer factor={1} />
-
-        <Button
-          title={'Start Trip'}
-          onPress={() => {
-            DriveKitTripAnalysis.startTrip();
-          }}
-        />
-        <Spacer factor={1} />
-        <Button
-          title={'Stop Trip'}
-          onPress={() => {
-            DriveKitTripAnalysis.stopTrip();
-          }}
-        />
-        <Spacer factor={1} />
-        <Button
-          title={'Cancel'}
-          onPress={() => {
-            DriveKitTripAnalysis.cancelTrip();
-          }}
-        />
-        <Spacer factor={1} />
-        <Button
-          title={'Check Trip Running ?'}
-          onPress={async () => {
-            const result = await DriveKitTripAnalysis.isTripRunning();
-            Alert.alert(result ? 'Trip is running' : 'Trip is not running');
-          }}
-        />
-        <Spacer factor={2} />
-        <Text style={styles.title}>Update Stop Timeout</Text>
-        <Spacer factor={1} />
-        <TextInput
-          value={stopTimeout}
-          style={styles.input}
-          returnKeyType={'done'}
-          keyboardType="numeric"
-          onChangeText={setStopTimeout}
-        />
-        <Spacer factor={2} />
-        <Button
-          title="Update Stop Timeout (in seconds)"
-          onPress={() =>
-            DriveKitTripAnalysis.setStopTimeout(parseInt(stopTimeout, 10))
-          }
-        />
-        <Spacer factor={2} />
-
-        <Button
-          title={'Enable CrashDetection'}
-          onPress={() => {
-            DriveKitTripAnalysis.activateCrashDetection(true);
-          }}
-        />
-        <Spacer factor={1} />
-        <Button
-          title={'Disable CrashDetection'}
-          onPress={() => {
-            DriveKitTripAnalysis.activateCrashDetection(false);
-          }}
-        />
-
-        <Spacer factor={2} />
         <Text style={styles.title}>Logs</Text>
         <Spacer factor={1} />
         <Button
@@ -451,7 +209,7 @@ const App = () => {
               body: 'Body mail',
             });
           }}
-        />
+        /> */}
       </ScrollView>
     </SafeAreaView>
   );

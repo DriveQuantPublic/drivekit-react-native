@@ -35,14 +35,12 @@ RCT_EXPORT_MODULE()
 
 RCT_REMAP_METHOD(getApiKey, getApiKeyWithResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    NSString *apiKey = [self getApiKey];
-    resolve(apiKey);
+    [self getApiKey:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(setApiKey, setApiKeyWithKey:(NSString *)key resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    [self setApiKey: key];
-    resolve(nil);
+    [self setApiKey:key resolve:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(getUserId, getUserIdWithResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
@@ -123,8 +121,14 @@ RCT_REMAP_METHOD(composeDiagnosisMail, composeDiagnosisMailWithOptions:(NSDictio
 }
 
 
-- (void)setApiKey:(NSString *)key {
+- (void)getApiKey:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    NSString *apiKey = [RNDriveKitCoreWrapper.shared getApiKey];
+    resolve(apiKey);
+}
+
+- (void)setApiKey:(NSString *)key resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
     [RNDriveKitCoreWrapper.shared setApiKeyWithKey:key];
+    resolve(nil);
 }
 
 - (void)setUserId:(NSString *)userId {
@@ -143,9 +147,6 @@ RCT_REMAP_METHOD(composeDiagnosisMail, composeDiagnosisMailWithOptions:(NSDictio
     return [RNDriveKitCoreWrapper.shared isTokenValid];
 }
 
-- (NSString *)getApiKey {
-    return [RNDriveKitCoreWrapper.shared getApiKey];
-}
 - (NSString *)getUserId {
     return [RNDriveKitCoreWrapper.shared getUserId];
 }
