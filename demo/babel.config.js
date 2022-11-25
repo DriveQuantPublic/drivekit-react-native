@@ -1,7 +1,7 @@
 const path = require('path');
-const packCore = require('../core/package.json');
-const packTripAnalysis = require('../trip-analysis/package.json');
-const packDriverData = require('../driver-data/package.json');
+const packCore = require('@react-native-drivekit/core/package.json');
+const packTripAnalysis = require('../packages/trip-analysis/package.json');
+const packDriverData = require('../packages/driver-data/package.json');
 
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
