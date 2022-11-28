@@ -35,73 +35,60 @@ RCT_EXPORT_MODULE()
 
 RCT_REMAP_METHOD(getApiKey, getApiKeyWithResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    NSString *apiKey = [self getApiKey];
-    resolve(apiKey);
+    [self getApiKey:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(setApiKey, setApiKeyWithKey:(NSString *)key resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    [self setApiKey: key];
-    resolve(nil);
+    [self setApiKey:key resolve:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(getUserId, getUserIdWithResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    NSString *userId = [self getUserId];
-    resolve(userId);
+    [self getUserId:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(setUserId, setUserIdWithUserId:(NSString *)userId resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    [self setUserId:userId];
-    resolve(nil);
+    [self setUserId:userId resolve:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(updateUserId, updateUserIdWithUserId:(NSString *)userId resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    [self updateUserId:userId];
-    resolve(nil);
+    [self updateUserId:userId resolve:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(deleteAccount, deleteAccountWithInstantDeletion:(nonnull NSNumber *)instantDeletion resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    [self deleteAccount:instantDeletion];
-    resolve(nil);
+    [self deleteAccount:instantDeletion resolve:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(isTokenValid, isTokenValidWithResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    NSNumber *validity = [self isTokenValid];
-    resolve(validity);
+    [self isTokenValid:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(enableSandboxMode, enableSandboxModeWithEnable:(nonnull NSNumber *)enable resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    [self enableSandboxMode:enable];
-    resolve(nil);
+    [self enableSandboxMode:enable resolve:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(reset, resetCore:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    [self reset];
-    resolve(nil);
+    [self reset:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(enableLogging, enableLoggingWithOptions:(NSDictionary *)options resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject){
-    [self enableLogging:options];
-    resolve(nil);
+    [self enableLoggingWithOptions:options resolve:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(disableLogging, disableLoggingWithOptions:(NSDictionary *)options resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject){
-    [self disableLogging:options];
-    resolve(nil);
+    [self disableLoggingWithOptions:options resolve:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(getUriLogFile, getUriLogFileWithResolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
-    NSURL *logFileUrl = [self getUriLogFile];
-    resolve([NSDictionary dictionaryWithObject:logFileUrl.path
-                                        forKey:@"uri"]);
+    [self getUriLogFile:resolve reject:reject];
 }
 
 RCT_REMAP_METHOD(getUserInfo, getUserInfoWithSynchronizationType:(NSString *)synchronizationType withResolver:(RCTPromiseResolveBlock)resolve withRejecter:(RCTPromiseRejectBlock)reject)
@@ -123,57 +110,91 @@ RCT_REMAP_METHOD(composeDiagnosisMail, composeDiagnosisMailWithOptions:(NSDictio
 }
 
 
-- (void)setApiKey:(NSString *)key {
+- (void)getApiKey:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    NSString *apiKey = [RNDriveKitCoreWrapper.shared getApiKey];
+    resolve(apiKey);
+}
+
+- (void)setApiKey:(NSString *)key resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
     [RNDriveKitCoreWrapper.shared setApiKeyWithKey:key];
+    resolve(nil);
 }
 
-- (void)setUserId:(NSString *)userId {
+- (void)getUserId:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    NSString *userId = [RNDriveKitCoreWrapper.shared getUserId];
+    resolve(userId);
+}
+
+
+- (void)setUserId:(NSString *)userId resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
     [RNDriveKitCoreWrapper.shared setUserIdWithUserId:userId];
+    resolve(nil);
 }
 
-- (void)updateUserId:(NSString *)userId {
+
+- (void)updateUserId:(NSString *)userId resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
     [RNDriveKitCoreWrapper.shared updateUserIdWithUserId:userId];
+    resolve(nil);
 }
 
-- (void)deleteAccount:(NSNumber *)instantDeletion {
-    [RNDriveKitCoreWrapper.shared deleteAccountWithInstantDeletion:instantDeletion];
+- (void)deleteAccount:(BOOL)instantDeletion resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    // TODO: check type
+    NSNumber *param = instantDeletion ? @1 : @0;
+    [RNDriveKitCoreWrapper.shared deleteAccountWithInstantDeletion:param];
+    resolve(nil);
+    }
+
+
+- (void)enableSandboxMode:(BOOL)enable resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    // TODO: check type
+    NSNumber *param  = enable ? @1 : @0;
+    [RNDriveKitCoreWrapper.shared enableSandboxModeWithEnable:param];
+    resolve(nil);
 }
 
-- (NSNumber *)isTokenValid {
-    return [RNDriveKitCoreWrapper.shared isTokenValid];
+
+- (void)isTokenValid:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    // TODO: check type
+    NSNumber * isTokenValid = [RNDriveKitCoreWrapper.shared isTokenValid];
+    resolve(isTokenValid);
 }
 
-- (NSString *)getApiKey {
-    return [RNDriveKitCoreWrapper.shared getApiKey];
-}
-- (NSString *)getUserId {
-    return [RNDriveKitCoreWrapper.shared getUserId];
-}
 
-- (void)enableSandboxMode:(NSNumber *)enable {
-    [RNDriveKitCoreWrapper.shared enableSandboxModeWithEnable:enable];
-}
-
-- (void)reset {
+- (void)reset:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
     [RNDriveKitCoreWrapper.shared reset];
+    resolve(nil);
 }
 
-- (void)disableLogging:(NSDictionary *)options {
+- (void)disableLoggingWithOptions:(NSDictionary *)options {
     [RNDriveKitCoreWrapper.shared disableLoggingWithShowInConsole:options[@"showInConsole"]];
 }
 
+- (void)disableLogging:(JS::NativeCore::SpecDisableLoggingOptions &)options resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    NSNumber *param = options.showInConsole().value() ? @1 : @0;
+    [RNDriveKitCoreWrapper.shared disableLoggingWithShowInConsole:param];
+    resolve(nil);
+}
 
-- (void)enableLogging:(NSDictionary *)options {
+- (void)enableLoggingWithOptions:(NSDictionary *)options {
     [RNDriveKitCoreWrapper.shared enableLoggingWithShowInConsole:options[@"showInConsole"]];
 }
 
-- (bool)composeDiagnosisMail: (NSDictionary *)options {
-    return [RNDriveKitCoreWrapper.shared composeDiagnosisMail: options];
+- (void)enableLogging:(JS::NativeCore::SpecEnableLoggingOptions &)options resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    NSDictionary *params = @{@"logPath": options.logPath(), @"showInConsole": options.showInConsole().value() ? @1 : @0};
+    [self enableLoggingWithOptions:params resolve:resolve reject:reject];
 }
 
--(NSURL* )getUriLogFile {
-    return [RNDriveKitCoreWrapper.shared getUriLogFile];
+
+- (void)getUriLogFile:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
+    NSURL *logFileUrl = [RNDriveKitCoreWrapper.shared getUriLogFile];
+    resolve([NSDictionary dictionaryWithObject:logFileUrl.path
+                                        forKey:@"uri"]);
 }
+
+- (void)composeDiagnosisMail:(JS::NativeCore::SpecComposeDiagnosisMailOptions &)options {
+    <#code#>
+}
+
 
 - (void)getUserInfo:(NSString *)synchronizationType resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject {
     [RNDriveKitCoreWrapper.shared getUserInfoWithSynchronizationType:synchronizationType resolver:resolve rejecter:reject];

@@ -41,7 +41,7 @@ const App = () => {
   // ========================================
   // ↓↓↓ ENTER YOUR DRIVEKIT API KEY HERE ↓↓↓
   // ========================================
-  // DriveKit.setApiKey('');
+  DriveKit.setApiKey('jX9ZchNyypeQwi6Gi5TUdkdc');
 
   var [userId, setUserId] = useState('');
   const [newUserId, setNewUserId] = useState('');
@@ -51,13 +51,14 @@ const App = () => {
   const [updateMetadataKey, setUpdateMetadataKey] = useState('');
   const [updateMetadataValue, setUpdateMedataValue] = useState('');
   const [tripMetadataKeyToDelete, setTripMetadataKeyToDelete] = useState('');
-  const [instantDeleteAccount, setInstantDeleteAccount] = useState(false);
+  const [instantDeleteAccount, setInstantDeleteAccount] = useState(true);
   const [monitorPotentialTripStart, setMonitorPotentialTripStart] =
     useState(false);
   const [stopTimeout, setStopTimeout] = useState('240');
 
   const checkUserIdValue = async () => {
     const userIdVal = await DriveKit.getUserId();
+    console.log({userIdVal});
     setUserId(userIdVal);
   };
 
@@ -79,179 +80,179 @@ const App = () => {
     checkUserIdValue();
   }, []);
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener('driveKitConnected', () => {
-      console.log('Connected to DriveKit');
-      DriveKitTripAnalysis.activateAutoStart(true);
-    });
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener('driveKitConnected', () => {
+  //     console.log('Connected to DriveKit');
+  //     DriveKitTripAnalysis.activateAutoStart(true);
+  //   });
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener('driveKitDisconnected', () => {
-      console.log('Disconnected from DriveKit');
-    });
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener('driveKitDisconnected', () => {
+  //     console.log('Disconnected from DriveKit');
+  //   });
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener(
-      'driveKitDidReceiveAuthenticationError',
-      (error: RequestError) => {
-        console.log('Received authentication error from DriveKit', error);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener(
+  //     'driveKitDidReceiveAuthenticationError',
+  //     (error: RequestError) => {
+  //       console.log('Received authentication error from DriveKit', error);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener(
-      'userIdUpdateStatusChanged',
-      ({status, userId: updatedUserId}) => {
-        console.log(
-          'UserId',
-          updatedUserId,
-          'update finished with status',
-          status,
-        );
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener(
+  //     'userIdUpdateStatusChanged',
+  //     ({status, userId: updatedUserId}) => {
+  //       console.log(
+  //         'UserId',
+  //         updatedUserId,
+  //         'update finished with status',
+  //         status,
+  //       );
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener(
-      'accountDeletionCompleted',
-      (status: DeleteAccountStatus) => {
-        console.log('delete account completed with status', status);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener(
+  //     'accountDeletionCompleted',
+  //     (status: DeleteAccountStatus) => {
+  //       console.log('delete account completed with status', status);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripCancelled',
-      (reason: CancelTripReason) => {
-        console.log('Trip was canceled', reason);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'tripCancelled',
+  //     (reason: CancelTripReason) => {
+  //       console.log('Trip was canceled', reason);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'potentialTripStart',
-      startMode => {
-        console.log('potential trip start', startMode);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'potentialTripStart',
+  //     startMode => {
+  //       console.log('potential trip start', startMode);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripStarted',
-      (startMode: StartMode) => {
-        console.log('trip start', startMode);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'tripStarted',
+  //     (startMode: StartMode) => {
+  //       console.log('trip start', startMode);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripPoint',
-      (tripPoint: TripPoint) => {
-        console.log('trip point', tripPoint);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'tripPoint',
+  //     (tripPoint: TripPoint) => {
+  //       console.log('trip point', tripPoint);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripSavedForRepost',
-      () => {
-        console.log('trip saved for repost');
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'tripSavedForRepost',
+  //     () => {
+  //       console.log('trip saved for repost');
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'beaconDetected',
-      () => {
-        console.log('Beacon detected');
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'beaconDetected',
+  //     () => {
+  //       console.log('Beacon detected');
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'significantLocationChangeDetected',
-      (location: Location) => {
-        console.log('Significant location change detected', location);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'significantLocationChangeDetected',
+  //     (location: Location) => {
+  //       console.log('Significant location change detected', location);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'sdkStateChanged',
-      (state: SDKState) => {
-        console.log('SDK State Changed', state);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'sdkStateChanged',
+  //     (state: SDKState) => {
+  //       console.log('SDK State Changed', state);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'crashDetected',
-      (info: CrashInfo) => {
-        console.log('Crash detected', info);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'crashDetected',
+  //     (info: CrashInfo) => {
+  //       console.log('Crash detected', info);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'crashFeedbackSent',
-      (crashFeedback: CrashFeedback) => {
-        console.log('Crash feedback sent', crashFeedback);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'crashFeedbackSent',
+  //     (crashFeedback: CrashFeedback) => {
+  //       console.log('Crash feedback sent', crashFeedback);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripFinished',
-      ({post, response}) => {
-        console.log(
-          'trip finished',
-          JSON.stringify(post),
-          JSON.stringify(response),
-        );
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'tripFinished',
+  //     ({post, response}) => {
+  //       console.log(
+  //         'trip finished',
+  //         JSON.stringify(post),
+  //         JSON.stringify(response),
+  //       );
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'bluetoothSensorStateChanged',
-      state => {
-        console.log('bluetooth sensor state changed', state);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'bluetoothSensorStateChanged',
+  //     state => {
+  //       console.log('bluetooth sensor state changed', state);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
   return (
     <SafeAreaView style={styles.page}>
@@ -288,7 +289,9 @@ const App = () => {
         <Button
           title="Configure User ID"
           onPress={async () => {
+            console.log('before');
             const localUserId = await DriveKit.getUserId();
+            console.log({localUserId});
             if (localUserId == null) {
               DriveKit.setUserId(userId);
             } else {
@@ -315,8 +318,8 @@ const App = () => {
           onPress={() => DriveKit.updateUserId(newUserId)}
         />
         <Spacer factor={2} />
-        <UserInfoForm />
-        <Spacer factor={2} />
+        {/* <UserInfoForm />
+        <Spacer factor={2} /> */}
         <Text style={styles.title}>Delete account</Text>
         <Spacer factor={1} />
         <View style={styles.row}>
@@ -341,6 +344,7 @@ const App = () => {
           title="Check token validity"
           onPress={async () => {
             const isTokenValid = await DriveKit.isTokenValid();
+            console.log({isTokenValid});
             Alert.alert(isTokenValid ? 'Token is valid' : 'Token is not valid');
           }}
         />
@@ -352,11 +356,11 @@ const App = () => {
           title={'Reset'}
           onPress={() => {
             DriveKit.reset();
-            DriveKitTripAnalysis.reset();
-            DriveKitDriverData.reset();
+            // DriveKitTripAnalysis.reset();
+            // DriveKitDriverData.reset();
           }}
         />
-
+        {/*
         <Button
           title={'Enable Logs'}
           onPress={() => {
@@ -595,7 +599,7 @@ const App = () => {
               body: 'Body mail',
             });
           }}
-        />
+        /> */}
       </ScrollView>
     </SafeAreaView>
   );
