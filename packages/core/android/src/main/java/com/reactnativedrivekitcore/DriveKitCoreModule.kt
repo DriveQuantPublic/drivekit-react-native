@@ -121,52 +121,52 @@ class DriveKitCoreModule internal constructor(context: ReactApplicationContext) 
         }
       }
 
-      @ReactMethod
-      override fun getUserInfo(synchronizationType: String?, promise: Promise) {
-        var mappedSynchronizationType: SynchronizationType = SynchronizationType.DEFAULT;
-        if(synchronizationType == "cache") {
-          mappedSynchronizationType = SynchronizationType.CACHE
-        }
-
-        DriveKit.getUserInfo(object : GetUserInfoQueryListener {
-          override fun onResponse(status: UserInfoGetStatus, userInfo: UserInfo?) {
-            when (status) {
-              UserInfoGetStatus.SUCCESS -> promise.resolve(UserInfoMappers.mapUserInfoToReadableMap((userInfo)))
-              UserInfoGetStatus.CACHE_DATA_ONLY -> promise.resolve(UserInfoMappers.mapUserInfoToReadableMap((userInfo)))
-              else -> promise.reject("Get User Info", "Unable to get user info")
-            }
-          }
-        }, mappedSynchronizationType)
-      }
-
-      @ReactMethod
-      override fun updateUserInfo(userInfo: ReadableMap, promise: Promise) {
-        var firstname: String? = null;
-        if(userInfo.hasKey("firstname")){
-          firstname = userInfo.getString("firstname")
-        }
-        var lastname: String? = null;
-        if(userInfo.hasKey("lastname")){
-          lastname = userInfo.getString("lastname")
-        }
-        var pseudo: String? = null;
-        if(userInfo.hasKey("pseudo")){
-          pseudo = userInfo.getString("pseudo")
-        }
-        DriveKit.updateUserInfo(firstname,
-          lastname,
-          pseudo,
-          object : UpdateUserInfoQueryListener {
-            override fun onResponse(status: Boolean){
-              if (status) {
-                promise.resolve(true)
-              } else {
-                promise.reject("Update User Info", "Unable to update user info")
-              }
-            }
-          }
-        )
-      }
+//    @ReactMethod
+//    override fun getUserInfo(synchronizationType: String?, promise: Promise) {
+//      var mappedSynchronizationType: SynchronizationType = SynchronizationType.DEFAULT;
+//      if(synchronizationType == "cache") {
+//        mappedSynchronizationType = SynchronizationType.CACHE
+//      }
+//
+//      DriveKit.getUserInfo(object : GetUserInfoQueryListener {
+//        override fun onResponse(status: UserInfoGetStatus, userInfo: UserInfo?) {
+//          when (status) {
+//            UserInfoGetStatus.SUCCESS -> promise.resolve(UserInfoMappers.mapUserInfoToReadableMap((userInfo)))
+//            UserInfoGetStatus.CACHE_DATA_ONLY -> promise.resolve(UserInfoMappers.mapUserInfoToReadableMap((userInfo)))
+//            else -> promise.reject("Get User Info", "Unable to get user info")
+//          }
+//        }
+//      }, mappedSynchronizationType)
+//    }
+//
+//    @ReactMethod
+//    override fun updateUserInfo(userInfo: ReadableMap, promise: Promise) {
+//      var firstname: String? = null;
+//      if(userInfo.hasKey("firstname")){
+//        firstname = userInfo.getString("firstname")
+//      }
+//      var lastname: String? = null;
+//      if(userInfo.hasKey("lastname")){
+//        lastname = userInfo.getString("lastname")
+//      }
+//      var pseudo: String? = null;
+//      if(userInfo.hasKey("pseudo")){
+//        pseudo = userInfo.getString("pseudo")
+//      }
+//      DriveKit.updateUserInfo(firstname,
+//        lastname,
+//        pseudo,
+//        object : UpdateUserInfoQueryListener {
+//          override fun onResponse(status: Boolean){
+//            if (status) {
+//              promise.resolve(true)
+//            } else {
+//              promise.reject("Update User Info", "Unable to update user info")
+//            }
+//          }
+//        }
+//      )
+//    }
 
     @ReactMethod
     override fun composeDiagnosisMail(options: ReadableMap?, promise: Promise) {

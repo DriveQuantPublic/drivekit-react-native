@@ -10,30 +10,30 @@ import {
   View,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import * as DriveKit from '@react-native-drivekit/core';
-import * as DriveKitDriverData from '@react-native-drivekit/driver-data';
-import * as DriveKitTripAnalysis from '@react-native-drivekit/trip-analysis';
-import type {
-  CancelTripReason,
-  StartMode,
-  TripPoint,
-  Location,
-  SDKState,
-  CrashInfo,
-  CrashFeedback,
-  TripMetadata,
-} from '@react-native-drivekit/trip-analysis';
-import {checkBluetoothPermissions} from './src/services/permissions/bluetooth';
-import {Spacer} from './src/components/Spacer';
+// import * as DriveKit from '@react-native-drivekit/core';
+// import * as DriveKitDriverData from '@react-native-drivekit/driver-data';
+// import * as DriveKitTripAnalysis from '@react-native-drivekit/trip-analysis';
+// import type {
+//   CancelTripReason,
+//   StartMode,
+//   TripPoint,
+//   Location,
+//   SDKState,
+//   CrashInfo,
+//   CrashFeedback,
+//   TripMetadata,
+// } from '@react-native-drivekit/trip-analysis';
+// import {checkBluetoothPermissions} from './src/services/permissions/bluetooth';
+// import {Spacer} from './src/components/Spacer';
 import {margins} from './src/margins';
-import CheckBox from '@react-native-community/checkbox';
-import {checkLocationsPermissions} from './src/services/permissions/location';
-import {checkRecognitionPermission} from './src/services/permissions/recognition';
-import {checkNotificationPermission} from './src/services/permissions/notification';
-import {checkBatteryOptimizationPermission} from './src/services/permissions/batteryOptimization';
-import {checkMotionPermission} from './src/services/permissions/motion';
-import {UserInfoForm} from './src/components/UserInfoForm';
-import {DeleteAccountStatus, RequestError} from '@react-native-drivekit/core';
+// import CheckBox from '@react-native-community/checkbox';
+// import {checkLocationsPermissions} from './src/services/permissions/location';
+// import {checkRecognitionPermission} from './src/services/permissions/recognition';
+// import {checkNotificationPermission} from './src/services/permissions/notification';
+// import {checkBatteryOptimizationPermission} from './src/services/permissions/batteryOptimization';
+// import {checkMotionPermission} from './src/services/permissions/motion';
+// import {UserInfoForm} from './src/components/UserInfoForm';
+// import {DeleteAccountStatus, RequestError} from '@react-native-drivekit/core';
 
 const inputHeight = 40;
 
@@ -41,7 +41,7 @@ const App = () => {
   // ========================================
   // ↓↓↓ ENTER YOUR DRIVEKIT API KEY HERE ↓↓↓
   // ========================================
-  // DriveKit.setApiKey('');
+  // DriveKit.setApiKey('jX9ZchNyypeQwi6Gi5TUdkdc');
 
   var [userId, setUserId] = useState('');
   const [newUserId, setNewUserId] = useState('');
@@ -51,212 +51,213 @@ const App = () => {
   const [updateMetadataKey, setUpdateMetadataKey] = useState('');
   const [updateMetadataValue, setUpdateMedataValue] = useState('');
   const [tripMetadataKeyToDelete, setTripMetadataKeyToDelete] = useState('');
-  const [instantDeleteAccount, setInstantDeleteAccount] = useState(false);
+  const [instantDeleteAccount, setInstantDeleteAccount] = useState(true);
   const [monitorPotentialTripStart, setMonitorPotentialTripStart] =
     useState(false);
   const [stopTimeout, setStopTimeout] = useState('240');
 
   const checkUserIdValue = async () => {
-    const userIdVal = await DriveKit.getUserId();
+    // const userIdVal = await DriveKit.getUserId();
+    console.log({userIdVal});
     setUserId(userIdVal);
   };
 
   useEffect(() => {
     const checkPermissions = async () => {
-      await checkLocationsPermissions();
-      await checkRecognitionPermission();
-      await checkBluetoothPermissions();
-      await checkNotificationPermission();
-      await checkMotionPermission();
-      /**
-       * There is no open source library that promisify the modal call
-       * This is why we put it at the end.
-       */
-      await checkBatteryOptimizationPermission();
+      // await checkLocationsPermissions();
+      // await checkRecognitionPermission();
+      // await checkBluetoothPermissions();
+      // await checkNotificationPermission();
+      // await checkMotionPermission();
+      // /**
+      //  * There is no open source library that promisify the modal call
+      //  * This is why we put it at the end.
+      //  */
+      // await checkBatteryOptimizationPermission();
     };
 
     checkPermissions();
     checkUserIdValue();
   }, []);
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener('driveKitConnected', () => {
-      console.log('Connected to DriveKit');
-      DriveKitTripAnalysis.activateAutoStart(true);
-    });
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener('driveKitConnected', () => {
+  //     console.log('Connected to DriveKit');
+  //     DriveKitTripAnalysis.activateAutoStart(true);
+  //   });
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener('driveKitDisconnected', () => {
-      console.log('Disconnected from DriveKit');
-    });
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener('driveKitDisconnected', () => {
+  //     console.log('Disconnected from DriveKit');
+  //   });
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener(
-      'driveKitDidReceiveAuthenticationError',
-      (error: RequestError) => {
-        console.log('Received authentication error from DriveKit', error);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener(
+  //     'driveKitDidReceiveAuthenticationError',
+  //     (error: RequestError) => {
+  //       console.log('Received authentication error from DriveKit', error);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener(
-      'userIdUpdateStatusChanged',
-      ({status, userId: updatedUserId}) => {
-        console.log(
-          'UserId',
-          updatedUserId,
-          'update finished with status',
-          status,
-        );
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener(
+  //     'userIdUpdateStatusChanged',
+  //     ({status, userId: updatedUserId}) => {
+  //       console.log(
+  //         'UserId',
+  //         updatedUserId,
+  //         'update finished with status',
+  //         status,
+  //       );
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKit.addEventListener(
-      'accountDeletionCompleted',
-      (status: DeleteAccountStatus) => {
-        console.log('delete account completed with status', status);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKit.addEventListener(
+  //     'accountDeletionCompleted',
+  //     (status: DeleteAccountStatus) => {
+  //       console.log('delete account completed with status', status);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripCancelled',
-      (reason: CancelTripReason) => {
-        console.log('Trip was canceled', reason);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'tripCancelled',
+  //     (reason: CancelTripReason) => {
+  //       console.log('Trip was canceled', reason);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'potentialTripStart',
-      startMode => {
-        console.log('potential trip start', startMode);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'potentialTripStart',
+  //     startMode => {
+  //       console.log('potential trip start', startMode);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripStarted',
-      (startMode: StartMode) => {
-        console.log('trip start', startMode);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'tripStarted',
+  //     (startMode: StartMode) => {
+  //       console.log('trip start', startMode);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripPoint',
-      (tripPoint: TripPoint) => {
-        console.log('trip point', tripPoint);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'tripPoint',
+  //     (tripPoint: TripPoint) => {
+  //       console.log('trip point', tripPoint);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripSavedForRepost',
-      () => {
-        console.log('trip saved for repost');
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'tripSavedForRepost',
+  //     () => {
+  //       console.log('trip saved for repost');
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'beaconDetected',
-      () => {
-        console.log('Beacon detected');
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'beaconDetected',
+  //     () => {
+  //       console.log('Beacon detected');
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'significantLocationChangeDetected',
-      (location: Location) => {
-        console.log('Significant location change detected', location);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'significantLocationChangeDetected',
+  //     (location: Location) => {
+  //       console.log('Significant location change detected', location);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'sdkStateChanged',
-      (state: SDKState) => {
-        console.log('SDK State Changed', state);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'sdkStateChanged',
+  //     (state: SDKState) => {
+  //       console.log('SDK State Changed', state);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'crashDetected',
-      (info: CrashInfo) => {
-        console.log('Crash detected', info);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'crashDetected',
+  //     (info: CrashInfo) => {
+  //       console.log('Crash detected', info);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'crashFeedbackSent',
-      (crashFeedback: CrashFeedback) => {
-        console.log('Crash feedback sent', crashFeedback);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'crashFeedbackSent',
+  //     (crashFeedback: CrashFeedback) => {
+  //       console.log('Crash feedback sent', crashFeedback);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'tripFinished',
-      ({post, response}) => {
-        console.log(
-          'trip finished',
-          JSON.stringify(post),
-          JSON.stringify(response),
-        );
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'tripFinished',
+  //     ({post, response}) => {
+  //       console.log(
+  //         'trip finished',
+  //         JSON.stringify(post),
+  //         JSON.stringify(response),
+  //       );
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
-  useEffect(() => {
-    const listener = DriveKitTripAnalysis.addEventListener(
-      'bluetoothSensorStateChanged',
-      state => {
-        console.log('bluetooth sensor state changed', state);
-      },
-    );
-    return () => listener.remove();
-  });
+  // useEffect(() => {
+  //   const listener = DriveKitTripAnalysis.addEventListener(
+  //     'bluetoothSensorStateChanged',
+  //     state => {
+  //       console.log('bluetooth sensor state changed', state);
+  //     },
+  //   );
+  //   return () => listener.remove();
+  // });
 
   return (
     <SafeAreaView style={styles.page}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.title}>Api Key</Text>
+        {/* <Text style={styles.title}>Api Key</Text>
         <Spacer factor={1} />
         <Button
           title="Check API key"
@@ -288,7 +289,9 @@ const App = () => {
         <Button
           title="Configure User ID"
           onPress={async () => {
+            console.log('before');
             const localUserId = await DriveKit.getUserId();
+            console.log({localUserId});
             if (localUserId == null) {
               DriveKit.setUserId(userId);
             } else {
@@ -341,6 +344,7 @@ const App = () => {
           title="Check token validity"
           onPress={async () => {
             const isTokenValid = await DriveKit.isTokenValid();
+            console.log({isTokenValid});
             Alert.alert(isTokenValid ? 'Token is valid' : 'Token is not valid');
           }}
         />
@@ -352,11 +356,11 @@ const App = () => {
           title={'Reset'}
           onPress={() => {
             DriveKit.reset();
-            DriveKitTripAnalysis.reset();
-            DriveKitDriverData.reset();
+            // DriveKitTripAnalysis.reset();
+            // DriveKitDriverData.reset();
           }}
-        />
-
+        /> */}
+        {/*
         <Button
           title={'Enable Logs'}
           onPress={() => {
@@ -636,7 +640,7 @@ const App = () => {
               body: 'Body mail',
             });
           }}
-        />
+        /> */}
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,6 +1,5 @@
 import type { TurboModule } from 'react-native';
 import { TurboModuleRegistry } from 'react-native';
-import type { WithDefault } from 'react-native/Libraries/Types/CodegenTypes';
 
 export type UserInfo = {
   firstname: string | null;
@@ -29,11 +28,11 @@ export interface Spec extends TurboModule {
     bccRecipients?: Array<string>;
     subject?: string;
     body?: string;
-  }): void;
-  getUserInfo(
-    synchronizationType: WithDefault<'default' | 'cache', 'default'>
-  ): Promise<UserInfo | null>;
-  updateUserInfo(userInfo: UserInfo): Promise<void>;
+  }): Promise<void>;
+  // getUserInfo(
+  //   synchronizationType: WithDefault<'default' | 'cache', 'default'>
+  // ): Promise<UserInfo | null>;
+  // updateUserInfo(userInfo: UserInfo): Promise<void>;
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('DriveKitCore');
+export default TurboModuleRegistry.getEnforcing<Spec>('RNDriveKitCore');

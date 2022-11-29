@@ -124,12 +124,8 @@
     ]
   },
   "codegenConfig": {
-    "libraries": [
-      {
-        "name": "RNTripAnalysisSpec",
-        "type": "modules",
-        "jsSrcsDir": "src"
-      }
-    ]
+    "name": "RNTripAnalysisSpec",
+    "type": "modules",
+    "jsSrcsDir": "src"
   }
 }
