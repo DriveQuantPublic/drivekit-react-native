@@ -57,7 +57,7 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    DriveKitCoreModule.Companion.initialize(this);
+    //DriveKitCoreModule.Companion.initialize(this);
     //RNTripNotification tripNotification = new RNTripNotification(
 //            "DriveKit SDK",
 //            "Start a trip with DriveKit SDK",

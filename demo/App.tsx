@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import * as DriveKit from '@react-native-drivekit/core';
+// import * as DriveKit from '@react-native-drivekit/core';
 import {checkBluetoothPermissions} from './src/services/permissions/bluetooth';
 import {Spacer} from './src/components/Spacer';
 import {margins} from './src/margins';
@@ -29,7 +29,7 @@ const App = () => {
   // ========================================
   // ↓↓↓ ENTER YOUR DRIVEKIT API KEY HERE ↓↓↓
   // ========================================
-  DriveKit.setApiKey('jX9ZchNyypeQwi6Gi5TUdkdc');
+  // DriveKit.setApiKey('jX9ZchNyypeQwi6Gi5TUdkdc');
 
   var [userId, setUserId] = useState('');
   const [newUserId, setNewUserId] = useState('');
@@ -108,7 +108,7 @@ const App = () => {
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <Text style={styles.title}>Api Key</Text>
         <Spacer factor={1} />
-        <Button
+        {/* <Button
           title="Check API key"
           onPress={async () => {
             const apiKey = await DriveKit.getApiKey();
@@ -124,7 +124,7 @@ const App = () => {
               );
             }
           }}
-        />
+        /> */}
         <Spacer factor={2} />
         <Text style={styles.title}>User ID</Text>
         <Spacer factor={1} />

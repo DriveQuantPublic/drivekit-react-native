@@ -11,15 +11,19 @@ module.exports = {
       {
         extensions: ['.tsx', '.ts', '.js', '.json'],
         alias: {
-          [packCore.name]: path.join(__dirname, '../core', packCore.source),
+          [packCore.name]: path.join(
+            __dirname,
+            '../packages/core',
+            packCore.source,
+          ),
           [packTripAnalysis.name]: path.join(
             __dirname,
-            '../trip-analysis',
+            '../packages/trip-analysis',
             packTripAnalysis.source,
           ),
           [packDriverData.name]: path.join(
             __dirname,
-            '../driver-data',
+            '../packages/driver-data',
             packDriverData.source,
           ),
         },

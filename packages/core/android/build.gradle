@@ -168,7 +168,7 @@ if (isNewArchitectureEnabled()) {
     jsRootDir = file("../src/")
     libraryName = "DriveKitCore"
     codegenJavaPackageName = "com.reactnativedrivekitcore"
-    codegenDir = rootProject.file("../../../node_modules/react-native-codegen/")
-    reactNativeDir = rootProject.file("../../../node_modules/react-native/")
+    // codegenDir = rootProject.file("../../../node_modules/react-native-codegen/")
+    // reactNativeDir = rootProject.file("../../../node_modules/react-native/")
   }
 }

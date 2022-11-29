@@ -8,7 +8,7 @@
 const path = require('path');
 
 const projectRoot = __dirname;
-const workspaceRoot = path.resolve(projectRoot, '../..');
+const workspaceRoot = path.resolve(projectRoot, '..');
 
 module.exports = {
   transformer: {
